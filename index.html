@@ -45,12 +45,12 @@
                      </div>
                      <div class="col-md-5 center-item">
                         <div class="input-group number-spinner">
-                           <button class="btn btn-default"><i class="fas fa-minus"></i></button>
+                           <button id="case-minus" class="btn btn-default"><i class="fas fa-minus"></i></button>
                            <input id="case-number" type="number" min="0" class="form-control text-center" value="1">
                            <button id="case-plus" class="btn btn-default"><i class="fas fa-plus"></i></button>
 
                         </div>
-                        <h5>$59</h5>
+                        <h5>$<span id="case-total">59</span></h5>
                         <img src="images/remove.png" alt="" class="remove-item">
                      </div>
                   </div>
@@ -81,11 +81,29 @@
    </section>
    <script>
 
-      // Case function
-      document.getElementById('case-plus').addEventListener('click', () => {
+      // common in Case number function
+      function updateCaseNumber(isIcreasing) {
          const caseInput = document.getElementById('case-number');
-         const caseNumber = caseInput.value;
-         caseInput.value = parseInt(caseNumber) + 1;
+         let caseNumber = caseInput.value;
+         // if (isIcreasing==true) {
+         if (isIcreasing) {
+            caseNumber = parseInt(caseNumber) + 1;
+         }
+         else if (caseNumber > 0) {
+            caseNumber = parseInt(caseNumber) - 1;
+         }
+         caseInput.value = caseNumber;
+         // update case total
+         const caseTotal = document.getElementById('case-total');
+         caseTotal.innerText = caseNumber * 59;
+      }
+
+      // Case number function
+      document.getElementById('case-plus').addEventListener('click', () => {
+         updateCaseNumber(true);
+      });
+      document.getElementById('case-minus').addEventListener('click', function () {
+         updateCaseNumber(false);
       })
 
    </script>
